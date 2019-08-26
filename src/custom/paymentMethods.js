@@ -3,7 +3,7 @@ import StripePaymentInput from "@reactioncommerce/components/StripePaymentInput/
 
 const paymentMethods = [
   {
-    displayName: "Credit Card",
+    displayName: "Stripe Credit Card",
     InputComponent: StripePaymentInput,
     name: "stripe_card",
     shouldCollectBillingAddress: true
@@ -13,7 +13,13 @@ const paymentMethods = [
     InputComponent: ExampleIOUPaymentForm,
     name: "iou_example",
     shouldCollectBillingAddress: true
-  }
+  },
+  {
+    displayName: "Fifo Credit Card",
+    InputComponent: StripePaymentInput,
+    name: "fifo_card",
+    shouldCollectBillingAddress: true
+  },
 ];
 
 export default paymentMethods;
