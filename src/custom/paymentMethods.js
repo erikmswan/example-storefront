@@ -1,5 +1,6 @@
 import ExampleIOUPaymentForm from "@reactioncommerce/components/ExampleIOUPaymentForm/v1";
 import StripePaymentInput from "@reactioncommerce/components/StripePaymentInput/v1";
+import RmsPaymentInput from './components/RmsPaymentInput';
 
 const paymentMethods = [
   {
@@ -16,7 +17,7 @@ const paymentMethods = [
   },
   {
     displayName: "Fifo Credit Card",
-    InputComponent: StripePaymentInput,
+    InputComponent: RmsPaymentInput,
     name: "fifo_card",
     shouldCollectBillingAddress: true
   },

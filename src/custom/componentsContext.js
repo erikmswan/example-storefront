@@ -56,6 +56,7 @@ import ProfileImage from "@reactioncommerce/components/ProfileImage/v1";
 import ProgressiveImage from "@reactioncommerce/components/ProgressiveImage/v1";
 import QuantityInput from "@reactioncommerce/components/QuantityInput/v1";
 import RegionInput from "@reactioncommerce/components/RegionInput/v1";
+import RmsForm from "./components/RmsForm";
 import Select from "@reactioncommerce/components/Select/v1";
 import SelectableItem from "@reactioncommerce/components/SelectableItem/v1";
 import SelectableList from "@reactioncommerce/components/SelectableList/v1";
@@ -111,6 +112,7 @@ export default {
   ProgressiveImage,
   QuantityInput,
   RegionInput,
+  RmsForm,
   Select,
   spinner,
   SelectableItem,

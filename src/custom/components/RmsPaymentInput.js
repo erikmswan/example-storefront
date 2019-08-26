@@ -2,11 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withComponents } from "@reactioncommerce/components-context";
 import styled from "styled-components";
-import { addTypographyStyles, CustomPropTypes } from "../../../utils";
 
-const SecureCaption = styled.div`
-  ${addTypographyStyles("StripePaymentInputCaption", "captionText")}
-`;
+const SecureCaption = styled.div``;
 
 const IconLockSpan = styled.span`
   display: inline-block;
@@ -15,10 +12,11 @@ const IconLockSpan = styled.span`
 `;
 
 const Span = styled.span`
+  font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, sans-serif;
   vertical-align: super;
 `;
 
-class StripePaymentInput extends Component {
+class RmsPaymentInput extends Component {
   static propTypes = {
     /**
      * You can provide a `className` prop that will be applied to the outermost DOM element
@@ -39,10 +37,10 @@ class StripePaymentInput extends Component {
        */
       iconLock: PropTypes.node,
       /**
-       * Pass either the Reaction StripeForm component or your own component that
+       * Pass either the Reaction RmsForm component or your own component that
        * accepts compatible props.
        */
-      StripeForm: CustomPropTypes.component.isRequired
+      RmsForm: PropTypes.object.isRequired,
     }),
     /**
      * Pass true while the input data is in the process of being saved.
@@ -75,12 +73,15 @@ class StripePaymentInput extends Component {
 
   async submit() {
     const { onSubmit } = this.props;
-    const { token } = await this._stripe.createToken();
+    // const { token } = await this._stripe.createToken();
+
+    // TODO: Fifo request here?
 
     await onSubmit({
-      displayName: `${token.card.brand} ending in ${token.card.last4}`,
+      // displayName: `${token.card.brand} ending in ${token.card.last4}`,
+      displayName: "credit card test",
       data: {
-        stripeTokenId: token.id
+        test: "test.id"
       }
     });
   }
@@ -95,20 +96,19 @@ class StripePaymentInput extends Component {
   }
 
   render() {
-    const { className, components: { iconLock, StripeForm } } = this.props;
+    const { className, components: { iconLock, RmsForm } } = this.props;
 
     return (
       <div className={className}>
-        <StripeForm
+        <RmsForm
           isComplete={this.handleChangeReadyState}
-          stripeRef={(stripe) => { this._stripe = stripe; }}
         />
-        <SecureCaption>
+        <div>
           <IconLockSpan>{iconLock}</IconLockSpan> <Span>Your Information is private and secure.</Span>
-        </SecureCaption>
+        </div>
       </div>
     );
   }
 }
 
-export default withComponents(StripePaymentInput);
+export default withComponents(RmsPaymentInput);
