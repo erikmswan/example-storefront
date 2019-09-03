@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import { withComponents } from "@reactioncommerce/components-context";
 import styled from "styled-components";
 
-const SecureCaption = styled.div``;
-
 const IconLockSpan = styled.span`
   display: inline-block;
   height: 20px;
@@ -12,7 +10,7 @@ const IconLockSpan = styled.span`
 `;
 
 const Span = styled.span`
-  font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, sans-serif;
+  font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, sans-serif;
   vertical-align: super;
 `;
 
@@ -40,7 +38,7 @@ class RmsPaymentInput extends Component {
        * Pass either the Reaction RmsForm component or your own component that
        * accepts compatible props.
        */
-      RmsForm: PropTypes.object.isRequired,
+      RmsForm: PropTypes.object.isRequired
     }),
     /**
      * Pass true while the input data is in the process of being saved.
@@ -92,16 +90,17 @@ class RmsPaymentInput extends Component {
       onReadyForSaveChange(isReady);
     }
     this.lastIsReady = isReady;
-  }
+  };
 
   render() {
-    const { className, components: { iconLock, RmsForm } } = this.props;
+    const {
+      className,
+      components: { iconLock, RmsForm }
+    } = this.props;
 
     return (
       <div className={className}>
-        <RmsForm
-          isComplete={this.handleChangeReadyState}
-        />
+        <RmsForm isComplete={this.handleChangeReadyState} />
         <div>
           <IconLockSpan>{iconLock}</IconLockSpan> <Span>Your Information is private and secure.</Span>
         </div>

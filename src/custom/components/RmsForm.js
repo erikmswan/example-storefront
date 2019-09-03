@@ -1,24 +1,8 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
 import { withComponents } from "@reactioncommerce/components-context";
 import { PaymentInputsWrapper, usePaymentInputs } from "react-payment-inputs";
 import images from "react-payment-inputs/images";
-
-const Field = styled.div`
-  -webkit-font-smoothing: antialiased;
-  background-color: #fafafa;
-  border-color: "#cccccc";
-  border-style: solid;
-  border-width: 1px;
-  box-sizing: border-box;
-  color: "#3c3c3c";
-  line-height: 1;
-  border-radius: 2px;
-  margin-bottom: 20px;
-  outline: none;
-  padding: 8px 10px;
-`;
 
 class RmsForm extends Component {
   static propTypes = {
@@ -52,7 +36,7 @@ class RmsForm extends Component {
 
   isComplete = () => {
     const { cardNumberComplete, cardExpiryComplete, cardCvcComplete, postalCodeComplete } = this.state;
-    console.log('is complete? state: ', this.state);
+    console.log("is complete? state: ", this.state);
     if (cardNumberComplete && cardExpiryComplete && cardCvcComplete && postalCodeComplete) {
       this.props.isComplete(true);
     } else {
@@ -61,14 +45,6 @@ class RmsForm extends Component {
   };
 
   render() {
-    const ccIcons = [
-      this.props.components.iconVisa,
-      this.props.components.iconAmericanExpress,
-      this.props.components.iconMastercard,
-      this.props.components.iconDiscover
-    ];
-
-    const { cardNumberPlaceholder, cardExpiryPlaceholder, cardCvcPlaceholder, postalCodePlaceholder } = this.props;
     const { wrapperProps, getCardImageProps, getCardNumberProps, getExpiryDateProps, getCVCProps } = usePaymentInputs();
 
     return (
