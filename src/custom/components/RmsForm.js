@@ -2,6 +2,8 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { withComponents } from "@reactioncommerce/components-context";
+import { PaymentInputsWrapper, usePaymentInputs } from "react-payment-inputs";
+import images from "react-payment-inputs/images";
 
 const Field = styled.div`
   -webkit-font-smoothing: antialiased;
@@ -18,16 +20,6 @@ const Field = styled.div`
   padding: 8px 10px;
 `;
 
-const AcceptedPaymentMethods = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin: 20px 0;
-`;
-
-const Span = styled.span`
-  margin-left: 5px;
-`;
-
 class RmsForm extends Component {
   static propTypes = {
     /**
@@ -38,56 +30,35 @@ class RmsForm extends Component {
      * single spot, you can pass in the components prop directly.
      */
     components: PropTypes.shape({
-      /**
-       * Visa icon as SVG
-       */
-      iconVisa: PropTypes.node,
-      /**
-       * American Express icon as SVG
-       */
-      iconAmericanExpress: PropTypes.node,
-      /**
-       * Discover icon as SVG
-       */
-      iconDiscover: PropTypes.node,
-      /**
-       * Mastercard icon as SVG
-       */
-      iconMastercard: PropTypes.node
-    }).isRequired,
+      // iconMastercard: PropTypes.node
+    }),
     /**
      *  Used to determined if all form fields have been completed
-    */
-    isComplete: PropTypes.func.isRequired,
+     */
+    isComplete: PropTypes.func.isRequired
   };
 
   state = {
     cardNumberComplete: false,
     cardExpiryComplete: false,
     cardCvcComplete: false,
-    postalCodeComplete: false,
-  }
+    postalCodeComplete: false
+  };
 
-  handleOnChange = component => event => {
+  handleOnChange = (component) => (event) => {
+    console.log("handle on change event: ", event);
     this.setState({ [`${component}Complete`]: true }, this.isComplete);
-  }
+  };
 
   isComplete = () => {
-    // const { cardNumberComplete, cardExpiryComplete, cardCvcComplete, postalCodeComplete } = this.state;
-    const { cardNumberComplete } = this.state;
-    // if (cardNumberComplete && cardExpiryComplete && cardCvcComplete && postalCodeComplete) {
-      if (cardNumberComplete) {
+    const { cardNumberComplete, cardExpiryComplete, cardCvcComplete, postalCodeComplete } = this.state;
+    console.log('is complete? state: ', this.state);
+    if (cardNumberComplete && cardExpiryComplete && cardCvcComplete && postalCodeComplete) {
       this.props.isComplete(true);
     } else {
       this.props.isComplete(false);
     }
-  }
-
-  renderIcons = (ccIcons) => (
-    <div>
-      {ccIcons.map((icon, index) => <Span key={index}>{icon}</Span>)}
-    </div >
-  );
+  };
 
   render() {
     const ccIcons = [
@@ -97,43 +68,29 @@ class RmsForm extends Component {
       this.props.components.iconDiscover
     ];
 
-    const {
-      cardNumberPlaceholder,
-      cardExpiryPlaceholder,
-      cardCvcPlaceholder,
-      postalCodePlaceholder
-    } = this.props;
-
-    const {
-      cardNumberIsFocused,
-      cardExpiryIsFocused,
-      cardCvcIsFocused,
-      postalCodeIsFocused
-    } = this.state;
-
-    const commonProps = {
-      style: {
-        base: {
-          "fontSize": "14px",
-          "color": "#3c3c3c",
-          "fontFamily": "'Source Sans Pro', 'Helvetica Neue', Helvetica, sans-serif",
-          "::placeholder": {
-            color: "#cccccc"
-          }
-        }
-      },
-      onFocus: this.handleOnFocus,
-      onBlur: this.handleOnBlur
-    };
+    const { cardNumberPlaceholder, cardExpiryPlaceholder, cardCvcPlaceholder, postalCodePlaceholder } = this.props;
+    const { wrapperProps, getCardImageProps, getCardNumberProps, getExpiryDateProps, getCVCProps } = usePaymentInputs();
 
     return (
       <Fragment>
-        <AcceptedPaymentMethods>
-          {this.renderIcons(ccIcons)}
-        </AcceptedPaymentMethods>
-        <Field>
-          <input {...commonProps} onChange={this.handleOnChange('cardNumber')} placeholder="Card Number" />
-        </Field>
+        <PaymentInputsWrapper {...wrapperProps}>
+          <svg {...getCardImageProps({ images })} />
+          <input
+            {...getCardNumberProps({
+              onChange: this.handleOnChange("cardNumber")
+            })}
+          />
+          <input
+            {...getExpiryDateProps({
+              onChange: this.handleOnChange("cardExpiry")
+            })}
+          />
+          <input
+            {...getCVCProps({
+              onChange: this.handleOnChange("cardCvc")
+            })}
+          />
+        </PaymentInputsWrapper>
       </Fragment>
     );
   }

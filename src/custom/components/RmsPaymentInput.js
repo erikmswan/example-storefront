@@ -73,7 +73,6 @@ class RmsPaymentInput extends Component {
 
   async submit() {
     const { onSubmit } = this.props;
-    // const { token } = await this._stripe.createToken();
 
     // TODO: Fifo request here?
 
